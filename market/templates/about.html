@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url({% static 'assets/img/breadcrumbs-bg.jpg' %});">
+      <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <h2>À propos</h2>
+        <ol>
+          <li><a href="{% url 'home' %}">Accueil</a></li>
+          <li>À propos</li>
+        </ol>
+
+      </div>
+    </div><!-- End Breadcrumbs -->
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+    <div class="container" data-aos="fade-up">
+
+    <div class="row position-relative">
+
+      <div class="col-lg-7 about-img" style="background-image: url({% static 'assets/img/about-1.jpg' %});"></div>
+
+      <div class="col-lg-7">
+        <h2>Un partenaire de confiance pour tous vos chantiers</h2>
+        <div class="our-story">
+          <h4>Fondée en 2018</h4>
+          <h3>Notre Histoire</h3>
+          <p>Implantée à Douala (Bonamoussadi), Construction King SARL est une référence dans le domaine du BTP, du commerce général, de la vente et de la location d'équipements de construction au Cameroun. Nous mettons à disposition des professionnels et particuliers des matériaux de qualité supérieure, incluant des équipements directement importés des U.S.A.</p>
+          <ul>
+            <li><i class="bi bi-check-circle"></i> <span>Vente et location de matériel de chantier performant et révisé</span></li>
+            <li><i class="bi bi-check-circle"></i> <span>Fourniture d'équipements de construction certifiés en provenance des U.S.A</span></li>
+            <li><i class="bi bi-check-circle"></i> <span>Accompagnement personnalisé et conseils techniques sur mesure</span></li>
+          </ul>
+          <p>Notre engagement est de garantir la réussite de vos projets immobiliers et d'infrastructures grâce à des solutions matérielles fiables, durables et adaptées aux exigences des chantiers modernes.</p>
+
+          <div class="watch-video d-flex align-items-center position-relative">
+            <i class="bi bi-play-circle"></i>
+            <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox stretched-link">Découvrir notre entreprise</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    </div>
+    </section>
+    <!-- End About Section -->
+
+    <!-- ======= Stats Counter Section ======= -->
+    <section id="stats-counter" class="stats-counter section-bg">
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item d-flex align-items-center w-100 h-100">
+              <i class="bi bi-emoji-smile color-blue flex-shrink-0"></i>
+              <div>
+                <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1"
+                  class="purecounter"></span>
+                <p>Happy Clients</p>
+              </div>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item d-flex align-items-center w-100 h-100">
+              <i class="bi bi-journal-richtext color-orange flex-shrink-0"></i>
+              <div>
+                <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1"
+                  class="purecounter"></span>
+                <p>Projects</p>
+              </div>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item d-flex align-items-center w-100 h-100">
+              <i class="bi bi-headset color-green flex-shrink-0"></i>
+              <div>
+                <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1"
+                  class="purecounter"></span>
+                <p>Hours Of Support</p>
+              </div>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item d-flex align-items-center w-100 h-100">
+              <i class="bi bi-people color-pink flex-shrink-0"></i>
+              <div>
+                <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1"
+                  class="purecounter"></span>
+                <p>Hard Workers</p>
+              </div>
+            </div>
+          </div><!-- End Stats Item -->
+
+        </div>
+
+      </div>
+    </section><!-- End Stats Counter Section -->
+
+    
+
+    <!-- ======= Testimonials Section ======= -->
+    <section id="testimonials" class="testimonials section-bg py-5">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header text-center mb-5">
+          <h2>Témoignages Clients</h2>
+          <p>Découvrez ce que nos partenaires, entrepreneurs et clients à Douala disent de notre accompagnement et de la qualité de nos équipements.</p>
+        </div>
+
+        <div class="slides-2 swiper">
+          <div class="swiper-wrapper">
+
+            <!-- Testimonial 1 -->
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="{% static 'assets/img/testimonials/testimonials-1.jpg' %}" class="testimonial-img" alt="Client Testimonial">
+                  <h3>Jean-Paul Nkoumo</h3>
+                  <h4>Promoteur Immobilier</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    Construction King Sarl a été un partenaire clé pour notre dernier chantier à Bonamoussadi. La qualité du matériel importé des U.S.A est irréprochable et la livraison a été parfaitement dans les délais.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <!-- Testimonial 2 -->
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="{% static 'assets/img/testimonials/testimonials-2.jpg' %}" class="testimonial-img" alt="Client Testimonial">
+                  <h3>Aminatou Bello</h3>
+                  <h4>Ingénieure Génie Civil</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    Le service de location d'engins est très flexible. Les équipements sont super bien entretenus, ce qui nous a évité les pannes imprévues sur le site. Une équipe très professionnelle.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <!-- Testimonial 3 -->
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="{% static 'assets/img/testimonials/testimonials-3.jpg' %}" class="testimonial-img" alt="Client Testimonial">
+                  <h3>Marc Etienne Mbida</h3>
+                  <h4>Entrepreneur BTP</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    Commander du matériel chez Construction King est rapide et clair. Le rapport qualité-prix sur les matériaux de construction est probablement l'un des meilleurs du secteur à Douala.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <!-- Testimonial 4 -->
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="{% static 'assets/img/testimonials/testimonials-4.jpg' %}" class="testimonial-img" alt="Client Testimonial">
+                  <h3>Samuel Eboa</h3>
+                  <h4>Particulier / Propriétaire</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    J'ai acheté les fournitures pour la finition de ma résidence. L'accueil à leur bureau et les conseils techniques sur le choix des matériaux ont fait toute la différence.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <!-- Testimonial 5 -->
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="{% static 'assets/img/testimonials/testimonials-5.jpg' %}" class="testimonial-img" alt="Client Testimonial">
+                  <h3>Christelle Talla</h3>
+                  <h4>Chef de Projet Infrastructure</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    Une réactivité exemplaire pour la fourniture des devis et la gestion administrative. Un vrai partenaire de confiance sous la direction de M. Tayou.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+    </section><!-- End Testimonials Section -->
+
+
+{%endblock%}  

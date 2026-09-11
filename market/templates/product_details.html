@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  /* Local Overrides matching theme conventions */
+  .project-details .portfolio-details-slider img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 12px;
+  }
+
+  .project-details .portfolio-info {
+    padding: 30px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    background: #fff;
+  }
+
+  .project-details .portfolio-info h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .project-details .portfolio-info ul {
+    list-style: none;
+    padding: 0;
+    font-size: 15px;
+  }
+
+  .project-details .portfolio-info ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .project-details .portfolio-info ul li strong {
+    min-width: 120px;
+    color: var(--color-secondary, #364d59);
+  }
+
+  .qty-field {
+    width: 90px;
+    height: 44px;
+    border-radius: 6px;
+    border: 1px solid #deedee;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .btn-theme-primary {
+    background-color: var(--color-primary, #feb900);
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 6px;
+    border: none;
+    transition: 0.3s ease;
+  }
+
+  .btn-theme-primary:hover {
+    background-color: var(--color-secondary, #364d59);
+    color: #fff;
+  }
+</style>
+
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('{% static "assets/img/breadcrumbs-bg.jpg" %}');">
+  <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+    <h2>Product Details</h2>
+    <ol>
+      <li><a href="{% url 'home' %}">Accueil</a></li>
+      <li><a href="{% url 'shop' %}">Boutique</a></li>
+      <li>{{ product.name }}</li>
+    </ol>
+  </div>
+</div><!-- End Breadcrumbs -->
+
+<!-- ======= Product Details Section ======= -->
+<section id="project-details" class="project-details section-bg py-5">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+    <div class="row gy-4">
+
+      <!-- Product Image -->
+      <div class="col-lg-7">
+        <div class="portfolio-details-slider swiper">
+          <div class="swiper-wrapper align-items-center">
+            <div class="swiper-slide">
+              {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid">
+              {% else %}
+                <img src="{% static 'assets/img/projects/default.jpg' %}" alt="Default Image" class="img-fluid">
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-description mt-4">
+          <h2>{{ product.name }}</h2>
+          <p>{{ product.description|linebreaks }}</p>
+        </div>
+      </div>
+
+      <!-- Product Meta & Cart Form -->
+      <div class="col-lg-5">
+        <div class="portfolio-info">
+          <h3>Détails du produit</h3>
+          <ul>
+            <li><strong>Categorie:</strong> <span>{{ product.category.name }}</span></li>
+            <li>
+              <strong>Prix:</strong> 
+              <span class="fs-4 fw-bold text-warning">{{ product.selling_price|floatformat:0 }} XAF</span>
+              <small class="text-muted ms-1">/ {{ product.unit }}</small>
+            </li>
+          </ul>
+
+          <hr class="my-4">
+
+          <!-- Add to Cart Form -->
+          {% if product.quantity > 0 %}
+          <form action="{% url 'add_to_cart' product.pk %}" method="POST" class="ajax-cart-form">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="quantity" class="form-label fw-bold">Choisir la quantité</label>
+              <div class="d-flex gap-2 align-items-center">
+                
+                <!-- Input updates the button href when value changes -->
+               <input type="number" name="quantity" value="1" min="1" max="{{ product.quantity }}" class="form-control qty-field">
+                
+                <button type="submit" class="btn btn-theme-primary flex-grow-1 add-to-cart-btn">Ajouter au Panier
+                  <i class="fas fa-shopping-cart mr-2"></i> 
+                </button>
+
+              </div>
+            </div>
+          </form>
+          {% else %}
+          <button class="btn btn-secondary w-100 disabled" disabled>Rupture de stock</button>
+          {% endif %}
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section><!-- End Product Details Section -->
+{% endblock %}

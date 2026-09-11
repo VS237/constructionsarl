@@ -1,0 +1,312 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Construction king sarl</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'assets/img/ksarllogo2.png' %}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Roboto:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: UpConstruction - v1.3.0
+  * Template URL: https://bootstrapmade.com/upconstruction-bootstrap-construction-website-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- Header -->
+  {% include 'includes/header.html' %}
+
+  {% block content %}
+  {% endblock %}
+
+  <!-- Footer -->
+  {% include 'includes/footer.html' %}
+
+  
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+  <!-- Include SweetAlert2 for modern, lightweight popups -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  const CSRF_TOKEN = '{{ csrf_token }}';
+  const badgeElement = document.getElementById('nav-cart-count');
+
+  // DOM Element Cache & Fast UI Updater
+  function updateCartUI(count) {
+    if (!badgeElement) return;
+    const num = Number(count) || 0;
+    badgeElement.textContent = num;
+    badgeElement.style.display = num > 0 ? 'inline-block' : 'none';
+  }
+
+  // Initial Badge Sync
+  document.addEventListener('DOMContentLoaded', () => {
+    fetch("{% url 'get_cart_count' %}")
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (data) updateCartUI(data.total_items ?? data.total_quantity ?? 0);
+      })
+      .catch(err => console.error('Cart Sync Error:', err));
+  });
+
+  // Fast Toast Notification Popup
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+  });
+
+  // Event Delegation for Add-to-Cart Action
+  document.addEventListener('click', async (e) => {
+    const anchor = e.target.closest('.add-to-cart-ajax');
+    if (!anchor) return;
+
+    e.preventDefault();
+    const url = anchor.getAttribute('href');
+
+    // 1. OPTIMISTIC UPDATE: Increment UI instantly before network response
+    const currentCount = Number(badgeElement?.textContent || 0);
+    updateCartUI(currentCount + 1);
+
+    // Visual button state indicator
+    anchor.classList.add('disabled');
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRFToken': CSRF_TOKEN
+        }
+      });
+
+      if (!response.ok) throw new Error('Network error');
+
+      const data = await response.json();
+
+      if (data.status === 'success') {
+        // Sync true backend total
+        const serverCount = data.total_items ?? data.total_quantity;
+        if (serverCount !== undefined) updateCartUI(serverCount);
+
+        // Display smooth toast popup
+        Toast.fire({
+          icon: 'success',
+          title: data.message || 'Product added to cart!'
+        });
+      } else {
+        throw new Error(data.message || 'Action failed');
+      }
+
+    } catch (error) {
+      // REVERT OPTIMISTIC UPDATE on failure
+      updateCartUI(currentCount);
+
+      Toast.fire({
+        icon: 'error',
+        title: 'Could not add item to cart'
+      });
+      console.error('Add To Cart Error:', error);
+
+    } finally {
+      anchor.classList.remove('disabled');
+    }
+  });
+</script>
+
+<!-- Add this near the top of your home page template (index.html/home.html) -->
+<script>
+    if (window.location.hash.includes('access_token=') && window.location.hash.includes('type=recovery')) {
+        // Forward the user and their hash token to the actual reset route
+        window.location.href = '/auth/password-reset-confirm/' + window.location.hash;
+    }
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("quoteForm");
+      if (!form) return;
+
+      const loadingDiv = form.querySelector(".loading");
+      const errorDiv = form.querySelector(".error-message");
+      const sentDiv = form.querySelector(".sent-message");
+      const submitBtn = form.querySelector("button[type='submit']");
+
+      // Helper: Dynamically create and show a Bootstrap pop-up modal
+      function showSuccessModal(message) {
+          let modalEl = document.getElementById("quoteSuccessModal");
+
+          // Create modal DOM structure if it doesn't already exist on page
+          if (!modalEl) {
+              const modalHTML = `
+              <div class="modal fade" id="quoteSuccessModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content text-center p-4" style="border-radius: 12px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+                    <div class="modal-body">
+                      <div class="mb-3">
+                        <i class="fas fa-check-circle text-warning display-3"></i>
+                      </div>
+                      <h4 class="fw-bold mb-2" style="color: #2c323f;">Demande Envoyée !</h4>
+                      <p class="text-muted mb-4" id="modalResponseMessage"></p>
+                      <button type="button" class="btn btn-warning fw-bold px-4 py-2" data-bs-dismiss="modal">
+                        Fermer
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>`;
+              document.body.insertAdjacentHTML("beforeend", modalHTML);
+              modalEl = document.getElementById("quoteSuccessModal");
+          }
+
+          document.getElementById("modalResponseMessage").textContent = message;
+
+          // Trigger Bootstrap 5 Modal
+          if (typeof bootstrap !== "undefined") {
+              const bsModal = new bootstrap.Modal(modalEl);
+              bsModal.show();
+          } else {
+              alert(message); // Standard alert fallback if Bootstrap JS isn't loaded
+          }
+      }
+
+      form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Show loading, hide previous alerts
+          if (loadingDiv) loadingDiv.classList.remove("d-none");
+          if (errorDiv) errorDiv.classList.add("d-none");
+          if (sentDiv) sentDiv.classList.add("d-none");
+          if (submitBtn) submitBtn.disabled = true;
+
+          const formData = new FormData(form);
+
+          fetch(form.action, {
+              method: "POST",
+              body: formData,
+              headers: {
+                  "X-Requested-With": "XMLHttpRequest"
+              }
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (loadingDiv) loadingDiv.classList.add("d-none");
+              if (submitBtn) submitBtn.disabled = false;
+
+              if (data.status === "success") {
+                  const successMsg = data.message || "Votre demande de devis a été envoyée avec succès.";
+
+                  // Display success message in inline text div if present
+                  if (sentDiv) {
+                      sentDiv.textContent = successMsg;
+                      sentDiv.classList.remove("d-none");
+                  }
+
+                  // Trigger Pop-up Modal
+                  showSuccessModal(successMsg);
+
+                  form.reset(); // Clear input fields
+              } else {
+                  if (errorDiv) {
+                      errorDiv.textContent = data.message || "Une erreur est survenue.";
+                      errorDiv.classList.remove("d-none");
+                  }
+              }
+          })
+          .catch(error => {
+              if (loadingDiv) loadingDiv.classList.add("d-none");
+              if (submitBtn) submitBtn.disabled = false;
+              if (errorDiv) {
+                  errorDiv.textContent = "Une erreur de connexion est survenue. Veuillez réessayer.";
+                  errorDiv.classList.remove("d-none");
+              }
+          });
+      });
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const waForm = document.getElementById("whatsappContactForm");
+    
+    // Replace with your company WhatsApp phone number (international format without +)
+    const phoneNumber = "237600000000"; 
+
+    waForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById("wa_name").value.trim();
+        const email = document.getElementById("wa_email").value.trim();
+        const subject = document.getElementById("wa_subject").value.trim();
+        const message = document.getElementById("wa_message").value.trim();
+
+        // Construct pre-filled formatted WhatsApp text
+        const text = `*Bonjour Construction King SARL,*%0A%0A` +
+                     `*Nom:* ${encodeURIComponent(name)}%0A` +
+                     `*Email:* ${encodeURIComponent(email)}%0A` +
+                     `*Sujet:* ${encodeURIComponent(subject)}%0A%0A` +
+                     `*Message:*%0A${encodeURIComponent(message)}`;
+
+        const whatsappURL = `https://wa.me/${phoneNumber}?text=${text}`;
+
+        // Open WhatsApp in a new tab
+        window.open(whatsappURL, "_blank");
+    });
+});
+</script>
+
+
+</body>
+
+</html>

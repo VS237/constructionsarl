@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url({% static 'assets/img/breadcrumbs-bg.jpg' %});">
+      <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <h2>Contact</h2>
+        <ol>
+          <li><a href="{% url 'home' %}">Accueil</a></li>
+          <li>Contact</li>
+        </ol>
+
+      </div>
+    </div><!-- End Breadcrumbs -->
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+    <div class="row gy-4">
+      <div class="col-lg-6">
+        <div class="info-item d-flex flex-column justify-content-center align-items-center">
+          <i class="bi bi-map"></i>
+          <h3>Notre Adresse</h3>
+          <p>Bonamoussadi, Douala, Cameroun</p>
+        </div>
+      </div><!-- End Info Item -->
+
+      <div class="col-lg-3 col-md-6">
+        <div class="info-item d-flex flex-column justify-content-center align-items-center">
+          <i class="bi bi-envelope"></i>
+          <h3>Adresse Email</h3>
+          <p>constructionking@gmail.com</p>
+        </div>
+      </div><!-- End Info Item -->
+
+      <div class="col-lg-3 col-md-6">
+        <div class="info-item d-flex flex-column justify-content-center align-items-center">
+          <i class="bi bi-telephone"></i>
+          <h3>Téléphone</h3>
+          <p>+237 600 00 00 00</p>
+        </div>
+      </div><!-- End Info Item -->
+
+    </div>
+
+    <div class="row gy-4 mt-1">
+
+      <div class="col-lg-6">
+        <!-- Google Maps Embed centré sur Bonamoussadi, Douala -->
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15919.123456789!2d9.7333!3d4.0833!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10610d8a5c321111%3A0x123456789abcdef!2sBonamoussadi%2C%20Douala%2C%20Cameroon!5e0!3m2!1sfr!2scm!4v1680000000000!5m2!1sfr!2scm"
+          frameborder="0" style="border:0; width: 100%; height: 384px;" allowfullscreen="" loading="lazy"></iframe>
+      </div><!-- End Google Maps -->
+
+      <div class="col-lg-6">
+        <form id="whatsappContactForm" class="php-email-form">
+          <div class="row gy-4">
+            <div class="col-lg-6 form-group">
+              <input type="text" name="name" class="form-control" id="wa_name" placeholder="Votre Nom complet" required>
+            </div>
+            <div class="col-lg-6 form-group">
+              <input type="email" class="form-control" name="email" id="wa_email" placeholder="Votre Adresse Email" required>
+            </div>
+          </div>
+          <div class="form-group mt-3">
+            <input type="text" class="form-control" name="subject" id="wa_subject" placeholder="Sujet (ex: Demande de devis, Location)" required>
+          </div>
+          <div class="form-group mt-3">
+            <textarea class="form-control" name="message" id="wa_message" rows="5" placeholder="Votre Message" required></textarea>
+          </div>
+
+          <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success fw-bold px-4 py-2 rounded-pill">
+              <i class="bi bi-whatsapp me-2"></i> Envoyer via WhatsApp
+            </button>
+          </div>
+        </form>
+      </div><!-- End Contact Form -->
+
+
+    </div>
+
+  </div>
+</section><!-- End Contact Section -->
+
+
+ {%endblock%} 

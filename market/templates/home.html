@@ -1,0 +1,539 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero">
+
+    <div class="info d-flex align-items-center">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6 text-center">
+            <h2 data-aos="fade-down">Bienvenue</span></h2>
+            <p data-aos="fade-up">
+              <strong>Construction King Sarl</span></strong> - Votre partenaire de confiance à Douala pour la <strong>vente et location de matériaux de construction</strong> de qualité supérieure et <strong>importés des U.S.A</strong>. Nous vous accompagnons dans la réalisation de tous vos projets avec rigueur et excellence.
+            </p>
+            <a data-aos="fade-up" data-aos-delay="200" href="{% url 'shop' %}" class="btn-get-started">C'est parti!</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+
+      <div class="carousel-item active" style="background-image: url({% static 'assets/img/hero-carousel/hero-carousel-1.jpg' %})">
+      </div>
+      <div class="carousel-item" style="background-image: url({% static 'assets/img/hero-carousel/hero-carousel-22.jpg' %})"></div>
+      <div class="carousel-item" style="background-image: url({% static 'assets/img/hero-carousel/hero-carousel-66.jpg' %})"></div>
+      <div class="carousel-item" style="background-image: url({% static 'assets/img/hero-carousel/hero-carousel-44.jpg' %})"></div>
+      <div class="carousel-item" style="background-image: url({% static 'assets/img/hero-carousel/hero-carousel-55.jpg' %})"></div>
+
+      <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+      </a>
+
+      <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+      </a>
+
+    </div>
+
+  </section><!-- End Hero Section -->
+
+  <main id="main">
+
+    <!-- ======= Get Started Section ======= -->
+    <section id="get-started" class="get-started section-bg py-5">
+      <div class="container">
+
+        <div class="row justify-content-between gy-4">
+
+          <!-- Business Overview Column -->
+          <div class="col-lg-6 d-flex align-items-center" data-aos="fade-up">
+            <div class="content">
+              <h3>Des Solutions de Construction Fiables et Durables à Douala</h3>
+              <p>
+                <strong>Construction King Sarl</strong> est votre référence pour la <strong>vente et la location de matériaux de construction</strong> ainsi que le commerce général. Implantés à Bonamoussadi (sis École Primaire La Marseille), nous garantissons l'approvisionnement rapide de vos chantiers avec des équipements de haute qualité.
+              </p>
+              <p>
+                Grâce à notre <strong>stock directement importé des U.S.A</strong>, nous fournissons aux particuliers et professionnels du BTP des matériaux robustes et conformes aux normes internationales. Faites confiance à une équipe expérimentée.
+              </p>
+
+              <!-- Quick Business Info Badge -->
+              <div class="p-3 bg-white rounded shadow-sm border-start border-warning stroke-4 mt-4">
+                <p class="mb-1 small"><strong>RCCM:</strong> RC: DEN2018/1/2976</p>
+                <p class="mb-0 small"><strong>Contact Direct:</strong> +237 600 12 95 28 | constructionking@gmail.com</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quote Request Form Column -->
+          <div class="col-lg-5" data-aos="fade">
+            <form action="{% url 'quote_request' %}" method="post" class="php-email-form" id="quoteForm">
+                {% csrf_token %}
+                <h3>Demander un Devis</h3>
+                <p>Remplissez le formulaire ci-dessous pour obtenir un devis personnalisé sur nos matériaux ou services de location.</p>
+
+                <div class="row gy-3">
+                    <div class="col-md-12">
+                        <input type="text" name="name" class="form-control" placeholder="Nom complet" required>
+                    </div>
+
+                    <div class="col-md-12">
+                        <input type="email" class="form-control" name="email" placeholder="Adresse Email" required>
+                    </div>
+
+                    <div class="col-md-12">
+                        <input type="tel" class="form-control" name="phone" placeholder="Numéro de téléphone (+237)" required>
+                    </div>
+
+                    <div class="col-md-12">
+                        <textarea class="form-control" name="message" rows="5" placeholder="Détaillez votre besoin (Vente, Location, Type de matériaux...)" required></textarea>
+                    </div>
+
+                    <div class="col-md-12 text-center">
+                        <div class="loading d-none">Chargement...</div>
+                        <div class="error-message alert alert-danger d-none my-2"></div>
+                        <div class="sent-message alert alert-success d-none my-2">Votre demande de devis a été envoyée avec succès. Merci !</div>
+
+                        <button type="submit" class="btn btn-warning fw-bold px-4 py-2">Envoyer la demande</button>
+                    </div>
+                </div>
+            </form>
+          </div><!-- End Quote Form -->
+
+        </div>
+
+      </div>
+    </section><!-- End Get Started Section -->
+
+    
+
+    
+
+    <!-- ======= Alt Services Section ======= -->
+    <section id="alt-services" class="alt-services section-bg py-5">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row justify-content-around gy-4">
+          <!-- Background Image Block -->
+          <div class="col-lg-6 img-bg" style="background-image: url({% static 'assets/img/features-11.jpg' %});" data-aos="zoom-in" data-aos-delay="100"></div>
+
+          <!-- Feature Content Column -->
+          <div class="col-lg-5 d-flex flex-column justify-content-center">
+            <h3>Pourquoi Choisir Construction King Sarl ?</h3>
+            <p>
+              Basés à Bonamoussadi (Douala), nous sommes votre partenaire stratégique pour tous vos besoins en matériaux de construction et équipements de chantier professionnels.
+            </p>
+
+            <!-- Feature 1: USA Import -->
+            <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="100">
+              <i class="bi bi-box-seam flex-shrink-0 fs-3 me-3 text-warning"></i>
+              <div>
+                <h4><a href="{% url 'shop' %}" class="stretched-link">Stock Importé des U.S.A</a></h4>
+                <p>Accédez à une sélection de matériaux certifiés et de haute qualité directement importés des États-Unis pour la durabilité de vos ouvrages.</p>
+              </div>
+            </div><!-- End Icon Box -->
+
+            <!-- Feature 2: Equipment Leasing -->
+            <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="200">
+              <i class="bi bi-truck flex-shrink-0 fs-3 me-3 text-warning"></i>
+              <div>
+                <h4><a href="{% url 'shop' %}" class="stretched-link">Location de Matériaux & Engins</a></h4>
+                <p>Bénéficiez de formules de location souples et économiques adaptées à la durée de vos projets de construction et de rénovation.</p>
+              </div>
+            </div><!-- End Icon Box -->
+
+            <!-- Feature 3: General Commerce -->
+            <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="300">
+              <i class="bi bi-shop flex-shrink-0 fs-3 me-3 text-warning"></i>
+              <div>
+                <h4><a href="{% url 'shop' %}" class="stretched-link">Commerce Général & BTP</a></h4>
+                <p>Une offre globale d'approvisionnement pour répondre efficacement aux exigences des particuliers, promoteurs et entrepreneurs.</p>
+              </div>
+            </div><!-- End Icon Box -->
+
+            <!-- Feature 4: Verified Expertise -->
+            <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="400">
+              <i class="bi bi-shield-check flex-shrink-0 fs-3 me-3 text-warning"></i>
+              <div>
+                <h4><a href="{% url 'about' %}" class="stretched-link">Entreprise Enregistrée & Fiable</a></h4>
+                <p>Un service professionnel structuré (RC: DEN2018/1/2976) garanti par une direction expérimentée.</p>
+              </div>
+            </div><!-- End Icon Box -->
+
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Alt Services Section -->
+
+       <!-- ======= Features Section ======= -->
+    <section id="features" class="features section-bg py-5">
+      <div class="container" data-aos="fade-up">
+
+        <!-- Navigation Tabs -->
+        <ul class="nav nav-tabs row g-2 d-flex">
+
+          <li class="nav-item col-3">
+            <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#tab-1">
+              <h4>Vente Matériaux</h4>
+            </a>
+          </li><!-- End tab nav item -->
+
+          <li class="nav-item col-3">
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-2">
+              <h4>Location Engins</h4>
+            </a>
+          </li><!-- End tab nav item -->
+
+          <li class="nav-item col-3">
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-3">
+              <h4>Import U.S.A</h4>
+            </a>
+          </li><!-- End tab nav item -->
+
+          <li class="nav-item col-3">
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-4">
+              <h4>Commerce Général</h4>
+            </a>
+          </li><!-- End tab nav item -->
+
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content mt-4">
+
+          <!-- TAB 1: Vente de Matériaux -->
+          <div class="tab-pane active show" id="tab-1">
+            <div class="row">
+              <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="100">
+                <h3>Matériaux de Construction de Haute Qualité</h3>
+                <p class="fst-italic">
+                  Un approvisionnement complet pour garantir la durabilité et la solidité de tous vos chantiers à Douala et ses environs.
+                </p>
+                <ul class="list-unstyled">
+                  <li><i class="bi bi-check2-all text-warning me-2"></i> Large choix de fournitures de chantier pour le gros œuvre et la finition.</li>
+                  <li><i class="bi bi-check2-all text-warning me-2"></i> Matériaux certifiés répondant aux normes de sécurité internationales.</li>
+                  <li><i class="bi bi-check2-all text-warning me-2"></i> Tarification compétitive pour les commandes en gros et au détail.</li>
+                </ul>
+              </div>
+              <div class="col-lg-6 order-1 order-lg-2 text-center" data-aos="fade-up" data-aos-delay="200">
+                <img src="{% static 'assets/img/construction-2.jpg' %}" alt="Vente de Matériaux" class="img-fluid rounded shadow-sm">
+              </div>
+            </div>
+          </div><!-- End Tab 1 -->
+
+          <!-- TAB 2: Location de Matériaux -->
+          <div class="tab-pane" id="tab-2">
+            <div class="row">
+              <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">
+                <h3>Location Économique de Matériaux et Équipements</h3>
+                <p class="fst-italic">
+                  Des solutions flexibles de location adaptées au calendrier de vos travaux.
+                </p>
+                <ul class="list-unstyled">
+                  <li><i class="bi bi-check2-all text-warning me-2"></i> Parc d'équipements et d'outils régulièrement entretenus et prêts à l'emploi.</li>
+                  <li><i class="bi bi-check2-all text-warning me-2"></i> Formules de location à la journée, à la semaine ou au mois.</li>
+                  <li><i class="bi bi-check2-all text-warning me-2"></i> Service d'assistance et conseils d'utilisation sur le matériel loué.</li>
+                </ul>
+              </div>
+              <div class="col-lg-6 order-1 order-lg-2 text-center">
+                <img src="{% static 'assets/img/features-22.jpg' %}" alt="Location de Matériaux" class="img-fluid rounded shadow-sm">
+              </div>
+            </div>
+          </div><!-- End Tab 2 -->
+
+          <!-- TAB 3: Import U.S.A -->
+          <div class="tab-pane" id="tab-3">
+            <div class="row">
+              <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">
+                <h3>Stock Exclusif Importé Directement des U.S.A</h3>
+                <p class="fst-italic">
+                  Accédez à des technologies et équipements américains réputés pour leur performance.
+                </p>
+                <ul class="list-unstyled">
+                  <li><i class="bi bi-check2-all text-warning me-2"></i> Importation directe garantissant la traçabilité et l'authenticité des produits.</li>
+                  <li><i class="bi bi-check2-all text-warning me-2"></i> Matériaux haute résistance conçus pour les environnements exigeants.</li>
+                  <li><i class="bi bi-check2-all text-warning me-2"></i> Disponibilité immédiate dans notre entrepôt situé à Bonamoussadi.</li>
+                </ul>
+              </div>
+              <div class="col-lg-6 order-1 order-lg-2 text-center">
+                <img src="{% static 'assets/img/features-44.jpg' %}" alt="Import USA" class="img-fluid rounded shadow-sm">
+              </div>
+            </div>
+          </div><!-- End Tab 3 -->
+
+          <!-- TAB 4: Commerce Général -->
+          <div class="tab-pane" id="tab-4">
+            <div class="row">
+              <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">
+                <h3>Commerce Général &amp; Logistique BTP</h3>
+                <p class="fst-italic">
+                  Un accompagnement global.
+                </p>
+                <ul class="list-unstyled">
+                  <li><i class="bi bi-check2-all text-warning me-2"></i> Fourniture d'équipements pour entreprises, artisans et particuliers.</li>
+                  <li><i class="bi bi-check2-all text-warning me-2"></i> Traitement rapide des devis et gestion simplifiée des commandes.</li>
+                  <li><i class="bi bi-check2-all text-warning me-2"></i> Structure légale enregistrée sous le registre RC: DEN2018/1/2976.</li>
+                </ul>
+              </div>
+              <div class="col-lg-6 order-1 order-lg-2 text-center">
+                <img src="{% static 'assets/img/construction-3.jpg' %}" alt="Commerce Général" class="img-fluid rounded shadow-sm">
+              </div>
+            </div>
+          </div><!-- End Tab 4 -->
+
+        </div>
+
+      </div>
+    </section><!-- End Features Section -->
+
+    <!-- ======= Products Section ======= -->
+    <section id="projects" class="projects">
+      <div class="container" data-aos="fade-up">
+
+        <!-- Section Title -->
+        <div class="section-header">
+          <h2><span>Nos</span> Produits &amp; Équipements</h2>
+            <p>
+              Découvrez notre sélection de matériaux de construction de haute qualité et nos stocks importés des U.S.A. 
+              Ajoutez vos articles au panier ou commandez directement pour vos chantiers.
+            </p>
+        </div>
+
+        <!-- Search & Filter Controls -->
+        <div class="search-filter-bar mb-4">
+          <form method="GET" action="." class="row g-3 align-items-center">
+            <div class="col-lg-5">
+              <div class="input-group">
+                <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
+                <input type="text" name="q" class="form-control border-start-0" placeholder="Search products..." value="{{ query }}">
+              </div>
+            </div>
+            
+            <div class="col-lg-4">
+              <select name="category" class="form-select" onchange="this.form.submit()">
+                <option value="">All Categories</option>
+                {% for cat in categories %}
+                <option value="{{ cat.name|slugify }}" {% if current_category == cat.name|slugify %}selected{% endif %}>
+                  {{ cat.name }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="col-lg-3 d-flex gap-2">
+              <button type="submit" class="btn btn-warning w-100">Search</button>
+              {% if query or current_category %}
+              <a href="." class="btn btn-outline-secondary"><i class="fas fa-undo"></i></a>
+              {% endif %}
+            </div>
+          </form>
+        </div>
+
+        <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry" data-portfolio-sort="original-order">
+
+          
+
+          <!-- Product Items Grid -->
+          <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200">
+
+            {% for product in products %}
+            <div class="col-lg-4 col-md-6 portfolio-item filter-{{ product.category.name|slugify }}">
+              <div class="portfolio-content h-100">
+                {% if product.image %}
+                  <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
+                {% else %}
+                  <img src="assets/img/projects/default.jpg" class="img-fluid" alt="{{ product.name }}">
+                {% endif %}
+
+                <div class="portfolio-info">
+                  <h4>{{ product.name }}</h4>
+                  <p>{{ product.description|truncatechars:60 }}</p>
+                  
+                  <div class="price-tag my-2 font-weight-bold text-light">
+                    <strong>{{ product.selling_price|floatformat:0 }} XAF</strong> / {{ product.unit }}
+                  </div>
+
+                  <!-- Flex container for side-by-side action buttons -->
+                  <div class="portfolio-links">
+                    {% if product.image %}
+                    <a href="{{ product.image.url }}" title="{{ product.name }}" data-gallery="portfolio-gallery-{{ product.category.name|slugify }}" class="glightbox">
+                      <i class="bi bi-zoom-in"></i>
+                    </a>
+                    {% endif %}
+
+                    <a href="{% url 'product_details' product.pk %}" title="View Details">
+                      <i class="bi bi-eye"></i>
+                    </a>
+
+                    <a href="{% url 'add_to_cart' product.id %}" title="Add to Cart" class="add-to-cart-ajax">
+                      <i class="bi bi-cart-plus"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Product Item -->
+            {% empty %}
+            <div class="col-12 text-center py-5">
+              <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
+              <h3>No products found</h3>
+              <p>Try adjusting your search or category filters.</p>
+            </div>
+            {% endfor %}
+
+          </div><!-- End Products Container -->
+
+        </div>
+
+        <!-- Pagination -->
+        {% if products.has_other_pages %}
+        <div class="row mt-5">
+          <div class="col-lg-12 text-center">
+            <div class="pagination-wrap">
+              <ul class="list-inline">
+                {% if products.has_previous %}
+                <li class="list-inline-item"><a href="?page={{ products.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}">Prev</a></li>
+                {% endif %}
+
+                {% for i in products.paginator.page_range %}
+                  {% if products.number == i %}
+                    <li class="list-inline-item"><a class="active" href="#">{{ i }}</a></li>
+                  {% elif i > products.number|add:'-3' and i < products.number|add:'3' %}
+                    <li class="list-inline-item"><a href="?page={{ i }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}">{{ i }}</a></li>
+                  {% endif %}
+                {% endfor %}
+
+                {% if products.has_next %}
+                <li class="list-inline-item"><a href="?page={{ products.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}">Next</a></li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+      </div>
+    </section><!-- End Products Section -->
+
+    <!-- ======= Testimonials Section ======= -->
+    <section id="testimonials" class="testimonials section-bg py-5">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header text-center mb-5">
+          <h2>Témoignages Clients</h2>
+          <p>Découvrez ce que nos partenaires, entrepreneurs et clients à Douala disent de notre accompagnement et de la qualité de nos équipements.</p>
+        </div>
+
+        <div class="slides-2 swiper">
+          <div class="swiper-wrapper">
+
+            <!-- Testimonial 1 -->
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="{% static 'assets/img/testimonials/testimonials-1.jpg' %}" class="testimonial-img" alt="Client Testimonial">
+                  <h3>Jean-Paul Nkoumo</h3>
+                  <h4>Promoteur Immobilier</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    Construction King Sarl a été un partenaire clé pour notre dernier chantier à Bonamoussadi. La qualité du matériel importé des U.S.A est irréprochable et la livraison a été parfaitement dans les délais.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <!-- Testimonial 2 -->
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="{% static 'assets/img/testimonials/testimonials-2.jpg' %}" class="testimonial-img" alt="Client Testimonial">
+                  <h3>Aminatou Bello</h3>
+                  <h4>Ingénieure Génie Civil</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    Le service de location d'engins est très flexible. Les équipements sont super bien entretenus, ce qui nous a évité les pannes imprévues sur le site. Une équipe très professionnelle.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <!-- Testimonial 3 -->
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="{% static 'assets/img/testimonials/testimonials-3.jpg' %}" class="testimonial-img" alt="Client Testimonial">
+                  <h3>Marc Etienne Mbida</h3>
+                  <h4>Entrepreneur BTP</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    Commander du matériel chez Construction King est rapide et clair. Le rapport qualité-prix sur les matériaux de construction est probablement l'un des meilleurs du secteur à Douala.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <!-- Testimonial 4 -->
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="{% static 'assets/img/testimonials/testimonials-4.jpg' %}" class="testimonial-img" alt="Client Testimonial">
+                  <h3>Samuel Eboa</h3>
+                  <h4>Particulier / Propriétaire</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    J'ai acheté les fournitures pour la finition de ma résidence. L'accueil à leur bureau et les conseils techniques sur le choix des matériaux ont fait toute la différence.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <!-- Testimonial 5 -->
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="{% static 'assets/img/testimonials/testimonials-5.jpg' %}" class="testimonial-img" alt="Client Testimonial">
+                  <h3>Christelle Talla</h3>
+                  <h4>Chef de Projet Infrastructure</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    Une réactivité exemplaire pour la fourniture des devis et la gestion administrative. Un vrai partenaire de confiance sous la direction de M. Tayou.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+    </section><!-- End Testimonials Section -->
+
+    
+
+  </main><!-- End #main -->
+
+  {% endblock %}

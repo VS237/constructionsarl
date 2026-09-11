@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<div class="container my-5 py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            
+            <!-- Printable Receipt Card -->
+            <div id="printable-receipt" class="card shadow-sm p-4 p-md-5 border-0">
+                
+                <!-- Receipt Header -->
+                <div class="receipt-header text-center mb-4 pb-3 border-bottom">
+                    <h2 class="fw-bold mb-1" style="color:#FEB900; text-transform: uppercase;">Construction King SARL</h2>
+                    <p class="text-muted mb-0">BTP, Vente de Matériaux & Location d'Engins de Chantier</p>
+                    <small class="text-secondary">Douala, Cameroun | Contact : (+237) 600 000 000</small>
+                </div>
+
+                <!-- Order & Customer Info -->
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <p class="mb-1"><strong>N° de Facture / Commande :</strong> #{{ order.order_number }}</p>
+                        <p class="mb-1"><strong>Date d'émission :</strong> {{ order.order_date|date:"d/m/Y" }}</p>
+                        <p class="mb-0"><strong>Statut :</strong> <span class="badge bg-success text-white">Payé</span></p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <p class="mb-1"><strong>Facturé à / Chantier :</strong></p>
+                        <p class="mb-1">{{ order.customer.user.get_full_name }}</p>
+                        <p class="mb-1">{{ order.town }}{% if order.city %}, {{ order.city }}{% endif %}</p>
+                        <p class="mb-0"><strong>Téléphone :</strong> {{ order.phone_number }}</p>
+                    </div>
+                </div>
+
+                <!-- Itemized Invoice Table -->
+                <div class="table-responsive">
+                    <table class="table table-borderless align-middle mb-0">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>Désignation des Matériaux / Services</th>
+                                <th class="text-center">Qté</th>
+                                <th class="text-end">Prix Unitaire</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.items.all %}
+                            <tr class="border-bottom">
+                                <td>
+                                    <span class="fw-semibold">{{ item.product.name }}</span>
+                                </td>
+                                <td class="text-center">{{ item.quantity }}</td>
+                                <td class="text-end">{{ item.price_at_purchase|floatformat:0|intcomma }} FCFA</td>
+                                <td class="text-end fw-semibold">
+                                    {{ item.quantity|add:0 }} x {{ item.price_at_purchase }}  FCFA
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            
+                            <!-- Delivery / Site Logistics Fees -->
+                            {% if order.shipping_cost %}
+                            <tr class="border-bottom">
+                                <td colspan="2" class="text-muted">Transport & Logistique de livraison</td>
+                                <td class="text-end text-muted">-</td>
+                                <td class="text-end fw-semibold">{{ order.shipping_cost|floatformat:0|intcomma }} FCFA</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-end h5 pt-3"><strong>Montant Total TTC :</strong></td>
+                                <td class="text-end h5 pt-3" style="color:#FEB900;">
+                                    <strong>{{ order.total_amount|floatformat:0|intcomma }} FCFA</strong>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <!-- Receipt Footer & Terms -->
+                <div class="receipt-footer mt-5 text-center text-muted border-top pt-3">
+                    <p class="mb-1 fw-semibold">Construction King SARL - Votre Partenaire de Confiance</p>
+                    <p class="mb-0"><small>Ce reçu électronique fait foi de preuve de paiement officielle pour vos fournitures de chantier.</small></p>
+                </div>
+            </div>
+
+            <!-- Action Buttons (Hidden when printing) -->
+            <div class="d-flex justify-content-center gap-3 mt-4 no-print">
+                <button onclick="window.print()" class="btn btn-warning fw-bold px-4 py-2 shadow-sm" style="background-color: #FEB900; border: none; color: #000;">
+                    <i class="bi bi-printer me-2"></i> Imprimer la facture / reçu
+                </button>
+                <a href="{% url 'shop' %}" class="btn btn-dark fw-bold px-4 py-2 shadow-sm">
+                    <i class="bi bi-arrow-left me-2"></i> Retour aux matériaux
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Print Optimization CSS for Construction King SARL */
+    @media print {
+        header, footer, nav, .no-print, .breadcrumbs, .top-header-area {
+            display: none !important;
+        }
+        body { 
+            background: #ffffff !important; 
+            color: #000000 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .container {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        #printable-receipt {
+            box-shadow: none !important;
+            border: none !important;
+            padding: 0 !important;
+        }
+        .badge {
+            border: 1px solid #000 !important;
+            color: #000 !important;
+        }
+    }
+</style>
+{% endblock %}

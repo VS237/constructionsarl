@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url({% static 'assets/img/breadcrumbs-bg.jpg' %});">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+        <h2>Commande réussie</h2>
+        <ol>
+            <li><a href="{% url 'home' %}">Accueil</a></li>
+            <li><a href="{% url 'shop' %}">Boutique</a></li>
+            <li>Confirmation</li>
+        </ol>
+    </div>
+</div><!-- End Breadcrumbs -->
+
+<div class="container my-5 py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            
+            <!-- Success Notification Card -->
+            <div class="card border-0 shadow-sm text-center p-4 p-md-5 mb-4">
+                <div class="card-body">
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle display-1" style="color: #f2d023;"></i>
+                    </div>
+                    <h2 class="fw-bold mb-3">Merci ! Votre commande a été passée avec succès.</h2>
+                    <p class="lead text-muted mb-2">
+                        Numéro de commande : <span class="badge bg-warning text-dark fs-6 px-3 py-2">#{{ order_number }}</span>
+                    </p>
+                    <p class="text-secondary">
+                        Nous avons bien reçu votre commande. Notre équipe prépare vos articles et vous contactera rapidement si des précisions sont nécessaires.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Order Brief / Summary Card (Optional) -->
+            {% if order %}
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white py-3 fw-bold border-bottom">
+                    <i class="fas fa-receipt me-2 text-warning"></i> Récapitulatif de la commande
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        {% for item in order.items.all %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                            <div>
+                                <h6 class="mb-0 fw-semibold">{{ item.product.name }}</h6>
+                                <small class="text-muted">Quantité : {{ item.quantity }}</small>
+                            </div>
+                            <span class="fw-bold">{{ item.total_price|floatformat:0|intcomma }} FCFA</span>
+                        </li>
+                        {% endfor %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center bg-light py-3 fw-bold">
+                            <span>Total de la commande</span>
+                            <span class="text-warning fs-5">{{ order.total_amount|floatformat:0|intcomma }} FCFA</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Call to Action Buttons -->
+            <div class="d-flex flex-column flex-sm-row justify-content-center gap-3 mt-4">
+                <a href="{% url 'print_receipt' order_number %}" target="_blank" class="btn btn-warning fw-bold px-4 py-3 shadow-sm" style="background-color: #f2cc23; border: none; color: #fff;">
+                    <i class="fas fa-print me-2"></i> Imprimer le reçu
+                </a>
+                <a href="https://wa.me/237600000000?text=Bonjour%20Construction%20King%20SARL,%20je%20suis%20le%20suivi%20de%20ma%20commande%20%23{{ order_number }}" 
+                   target="_blank" 
+                   class="btn btn-outline-success fw-bold px-4 py-3 shadow-sm">
+                    <i class="fab fa-whatsapp me-2"></i> Suivre sur WhatsApp
+                </a>
+                <a href="{% url 'shop' %}" class="btn btn-dark fw-bold px-4 py-3 shadow-sm">
+                    <i class="fas fa-shopping-bag me-2"></i> Continuer les achats
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

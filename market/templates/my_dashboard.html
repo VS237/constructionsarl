@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load static %}
+
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url({% static 'assets/img/breadcrumbs-bg.jpg' %});">
+      <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <h2>{{ customer.first_name }}</h2>
+        <ol>
+          <li><a href="{% url 'home' %}">Accueil</a></li>
+          <li>{{ customer.first_name }}</li>
+        </ol>
+
+      </div>
+    </div><!-- End Breadcrumbs -->
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="fw-bold">Salut, {{ customer.first_name }}</h2>
+            <p class="text-muted">Bienvenue dans votre espace client.</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 bg-warning text-dark p-3">
+                <div class="card-body">
+                    <small class="text-uppercase opacity-75">Total Balance Due</small>
+                    <h1 class="display-5 fw-bold my-2">{{ total_debt|intcomma }} <span class="fs-2">XAF</span></h1>
+                    <div class="mt-4">
+                        <span class="badge {% if total_debt > 0 %}bg-danger{% else %}bg-success{% endif %}">
+                            {% if total_debt > 0 %}Paiement en attente{% else %}Aucune dette en cours{% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card border-0 shadow-sm rounded-4 mt-4 p-3">
+                <h6 class="fw-bold"><i class="fas fa-info-circle me-2 text-primary"></i>Votre limite de crédit</h6>
+                <p class="mb-0 text-muted">Vous êtes autorisé à acheter jusqu'à <strong>{{ customer.credit_limit|intcomma }} XAF</strong>.</p>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-header bg-white border-0 py-3">
+                    <h5 class="fw-bold mb-0">Historique des transactions</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead class="bg-light">
+                            <tr class="small text-muted text-uppercase">
+                                <th class="ps-4">Ticket</th>
+                                <th>Date</th>
+                                <th>somme</th>
+                                <th class="text-end pe-4">Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for credit in credits %}
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="fw-medium">#{{ credit.credit_number|truncatechars:8 }}</div>
+                                    <div class="small text-muted">Items: {{ credit.products.count }}</div>
+                                </td>
+                                <td>{{ credit.credit_date|date:"M d, Y" }}</td>
+                                <td class="fw-bold">{{ credit.amount|intcomma }} XAF</td>
+                                <td class="text-end pe-4">
+                                    {% if credit.status == 'paid' %}
+                                        <span class="text-success small"><i class="fas fa-check-circle me-1"></i>Reglé</span>
+                                    {% else %}
+                                        <span class="text-danger small fw-bold">Dû: {{ credit.expected_return_date|date:"M d" }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center py-5">Aucune transaction trouvée.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
