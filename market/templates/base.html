@@ -32,6 +32,70 @@
   <!-- Template Main CSS File -->
   <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
 
+  <style>
+    /* Container & List Alignment */
+    .pagination-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+
+    .pagination-wrap ul.list-inline {
+      display: inline-flex;
+      gap: 8px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .pagination-wrap .list-inline-item {
+      margin: 0;
+    }
+
+    /* Base Link Styles (Circular Buttons) */
+    .pagination-wrap .list-inline-item a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 42px;
+      height: 42px;
+      padding: 0 14px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #333333;
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Hover & Focus States */
+    .pagination-wrap .list-inline-item a:hover {
+      background-color: #ffc107; /* Matches theme warning/gold accent */
+      border-color: #ffc107;
+      color: #000000;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 193, 7, 0.35);
+    }
+
+    /* Active Page State */
+    .pagination-wrap .list-inline-item a.active {
+      background-color: #ffc107;
+      border-color: #ffc107;
+      color: #000000;
+      cursor: default;
+      box-shadow: 0 4px 10px rgba(255, 193, 7, 0.25);
+    }
+
+    /* Specific styling for Prev/Next text buttons */
+    .pagination-wrap .list-inline-item a[href*="page="]:not([aria-current]) {
+      font-size: 0.9rem;
+    }
+  </style>
+
   <!-- =======================================================
   * Template Name: UpConstruction - v1.3.0
   * Template URL: https://bootstrapmade.com/upconstruction-bootstrap-construction-website-template/
@@ -303,6 +367,108 @@ document.addEventListener("DOMContentLoaded", function () {
         // Open WhatsApp in a new tab
         window.open(whatsappURL, "_blank");
     });
+});
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  /**
+   * Fluid AJAX Navigation for #projects section
+   */
+  function fetchProducts(url) {
+    const targetSection = document.getElementById("projects");
+    if (!targetSection) return;
+
+    // Visual feedback during loading
+    targetSection.style.opacity = "0.5";
+    targetSection.style.transition = "opacity 0.2s ease-in-out";
+
+    fetch(url, {
+      headers: {
+        "X-Requested-With": "XMLHttpRequest"
+      }
+    })
+      .then(response => {
+        if (!response.ok) throw new Error("Network response failed");
+        return response.text();
+      })
+      .then(html => {
+        // Create a temporary DOM parser to extract the new #projects section
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const newContent = doc.getElementById("projects");
+
+        if (newContent) {
+          targetSection.innerHTML = newContent.innerHTML;
+          window.history.pushState({}, "", url);
+        }
+      })
+      .catch(error => console.error("AJAX error:", error))
+      .finally(() => {
+        targetSection.style.opacity = "1";
+
+        // Re-initialize GLightbox & AOS animations if present
+        if (typeof GLightbox !== "undefined") {
+          GLightbox({ selector: ".glightbox" });
+        }
+        if (typeof AOS !== "undefined") {
+          AOS.refresh();
+        }
+      });
+  }
+
+  // Event Delegation for Clicks (Pagination & Reset Button)
+  document.addEventListener("click", function (e) {
+    const projectsSection = e.target.closest("#projects");
+    if (!projectsSection) return;
+
+    // Handle Pagination Links
+    const paginationLink = e.target.closest(".pagination-wrap a");
+    if (paginationLink) {
+      const href = paginationLink.getAttribute("href");
+      if (href && href !== "#") {
+        e.preventDefault();
+        fetchProducts(paginationLink.href);
+        return;
+      }
+    }
+
+    // Handle Reset Filter Button (<a href=".">)
+    const resetBtn = e.target.closest(".search-filter-bar a");
+    if (resetBtn) {
+      e.preventDefault();
+      fetchProducts(resetBtn.href);
+    }
+  });
+
+  // Event Delegation for Search Form Submission
+  document.addEventListener("submit", function (e) {
+    const filterForm = e.target.closest("#projects .search-filter-bar form");
+    if (filterForm) {
+      e.preventDefault();
+      const formData = new FormData(filterForm);
+      const searchParams = new URLSearchParams(formData);
+      const actionUrl = filterForm.getAttribute("action") || ".";
+      const fullUrl = `${actionUrl}?${searchParams.toString()}`;
+      
+      fetchProducts(fullUrl);
+    }
+  });
+
+  // Event Delegation for Category Dropdown Change (onchange="this.form.submit()")
+  document.addEventListener("change", function (e) {
+    const categorySelect = e.target.closest("#projects select[name='category']");
+    if (categorySelect) {
+      const form = categorySelect.form;
+      if (form) {
+        form.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+      }
+    }
+  });
+
+  // Handle Browser Back/Forward buttons smoothly
+  window.addEventListener("popstate", function () {
+    fetchProducts(window.location.href);
+  });
 });
 </script>
 
