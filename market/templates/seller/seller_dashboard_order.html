@@ -96,7 +96,7 @@
                         <td data-label="Total (XAF)" class="fw-bold text-success">{{ order.total_amount }}</td>
                         <td class="text-center">
                             <div class="d-flex justify-content-center gap-2">
-                                <form action="{% url 'admin_process_order' order.id %}" method="POST" onsubmit="return confirm('Process this order? Stock will be deducted.')">
+                                <form action="{% url 'process_order' order.id %}" method="POST" onsubmit="return confirm('Process this order? Stock will be deducted.')">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-warning rounded-pill px-3 shadow-sm fw-bold btn-sm">
                                         <i class="bi bi-box-seam me-1"></i> Process
