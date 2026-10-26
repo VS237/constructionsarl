@@ -231,12 +231,12 @@
 </script>
 
 <!-- Add this near the top of your home page template (index.html/home.html) -->
-<script>
+<!--<script>
     if (window.location.hash.includes('access_token=') && window.location.hash.includes('type=recovery')) {
         // Forward the user and their hash token to the actual reset route
         window.location.href = '/auth/password-reset-confirm/' + window.location.hash;
     }
-</script>
+</script> -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
       const form = document.getElementById("quoteForm");
